@@ -1,1 +1,1 @@
-##End to end machine learning pgitroject
+##End to end machine learning project
