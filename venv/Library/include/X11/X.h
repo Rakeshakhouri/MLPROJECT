@@ -32,13 +32,13 @@ Copyright 1987 by Digital Equipment Corporation, Maynard, Massachusetts.
 
                         All Rights Reserved
 
-Permission to use, copy, modify, and distribute this software and its
-documentation for any purpose and without fee is hereby granted,
+Permission to use, copy, modify, and distribute this software and its 
+documentation for any purpose and without fee is hereby granted, 
 provided that the above copyright notice appear in all copies and that
-both that copyright notice and this permission notice appear in
+both that copyright notice and this permission notice appear in 
 supporting documentation, and that the name of Digital not be
 used in advertising or publicity pertaining to distribution of the
-software without specific, written prior permission.
+software without specific, written prior permission.  
 
 DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
 ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
@@ -53,11 +53,6 @@ SOFTWARE.
 #define X_PROTOCOL	11		/* current protocol version */
 #define X_PROTOCOL_REVISION 0		/* current minor version */
 
-#if defined(MAC_OSX_TK)
-#   define Cursor XCursor
-#   define Region XRegion
-#endif
-
 /* Resources */
 
 /*
@@ -68,11 +63,7 @@ SOFTWARE.
 #ifndef _XSERVER64
 #  ifndef _XTYPEDEF_XID
 #    define _XTYPEDEF_XID
-#    ifdef _WIN64
-typedef unsigned __int64 XID;
-#    else
 typedef unsigned long XID;
-#    endif
 #  endif
 #  ifndef _XTYPEDEF_MASK
 #    define _XTYPEDEF_MASK
@@ -114,21 +105,14 @@ typedef XID Colormap;
 typedef XID GContext;
 typedef XID KeySym;
 
-typedef unsigned long KeyCode;	/* In order to use IME, the Macintosh needs
-				 * to pack 3 bytes into the keyCode field in
-				 * the XEvent.  In the real X.h, a KeyCode is
-				 * defined as a short, which wouldn't be big
-				 * enough. */
+typedef unsigned char KeyCode;
 
 /*****************************************************************
  * RESERVED RESOURCE AND CONSTANT DEFINITIONS
  *****************************************************************/
 
-#ifndef _WIN32
-#   define None              0L      /* See bug [9e31fd9449] and below */
-#else
-/* Pert-Tk expects None to be a macro. See ticket [593eb0227c] */
-#   define None              None    /* uses the enum below */
+#ifndef None
+#define None                 0L	/* universal null resource or null atom */
 #endif
 
 #define ParentRelative       1L	/* background pixmap in CreateWindow
@@ -156,39 +140,39 @@ typedef unsigned long KeyCode;	/* In order to use IME, the Macintosh needs
 
 #define NoSymbol	     0L	/* special KeySym */
 
-/*****************************************************************
- * EVENT DEFINITIONS
+/***************************************************************** 
+ * EVENT DEFINITIONS 
  *****************************************************************/
 
 /* Input Event Masks. Used as event-mask window attribute and as arguments
    to Grab requests.  Not to be confused with event names.  */
 
 #define NoEventMask			0L
-#define KeyPressMask			(1L<<0)
-#define KeyReleaseMask			(1L<<1)
-#define ButtonPressMask			(1L<<2)
-#define ButtonReleaseMask		(1L<<3)
-#define EnterWindowMask			(1L<<4)
-#define LeaveWindowMask			(1L<<5)
-#define PointerMotionMask		(1L<<6)
-#define PointerMotionHintMask		(1L<<7)
-#define Button1MotionMask		(1L<<8)
-#define Button2MotionMask		(1L<<9)
-#define Button3MotionMask		(1L<<10)
-#define Button4MotionMask		(1L<<11)
-#define Button5MotionMask		(1L<<12)
-#define ButtonMotionMask		(1L<<13)
+#define KeyPressMask			(1L<<0)  
+#define KeyReleaseMask			(1L<<1)  
+#define ButtonPressMask			(1L<<2)  
+#define ButtonReleaseMask		(1L<<3)  
+#define EnterWindowMask			(1L<<4)  
+#define LeaveWindowMask			(1L<<5)  
+#define PointerMotionMask		(1L<<6)  
+#define PointerMotionHintMask		(1L<<7)  
+#define Button1MotionMask		(1L<<8)  
+#define Button2MotionMask		(1L<<9)  
+#define Button3MotionMask		(1L<<10) 
+#define Button4MotionMask		(1L<<11) 
+#define Button5MotionMask		(1L<<12) 
+#define ButtonMotionMask		(1L<<13) 
 #define KeymapStateMask			(1L<<14)
-#define ExposureMask			(1L<<15)
-#define VisibilityChangeMask		(1L<<16)
-#define StructureNotifyMask		(1L<<17)
-#define ResizeRedirectMask		(1L<<18)
-#define SubstructureNotifyMask		(1L<<19)
-#define SubstructureRedirectMask	(1L<<20)
-#define FocusChangeMask			(1L<<21)
-#define PropertyChangeMask		(1L<<22)
-#define ColormapChangeMask		(1L<<23)
-#define OwnerGrabButtonMask		(1L<<24)
+#define ExposureMask			(1L<<15) 
+#define VisibilityChangeMask		(1L<<16) 
+#define StructureNotifyMask		(1L<<17) 
+#define ResizeRedirectMask		(1L<<18) 
+#define SubstructureNotifyMask		(1L<<19) 
+#define SubstructureRedirectMask	(1L<<20) 
+#define FocusChangeMask			(1L<<21) 
+#define PropertyChangeMask		(1L<<22) 
+#define ColormapChangeMask		(1L<<23) 
+#define OwnerGrabButtonMask		(1L<<24) 
 
 /* Event names.  Used in "type" field in XEvent structures.  Not to be
 confused with event masks above.  They start from 2 because 0 and 1
@@ -227,7 +211,8 @@ are reserved in the protocol for errors and replies. */
 #define ColormapNotify		32
 #define ClientMessage		33
 #define MappingNotify		34
-#define LASTEvent		35	/* must be bigger than any event # */
+#define GenericEvent		35
+#define LASTEvent		36	/* must be bigger than any event # */
 
 
 /* Key masks. Used as modifiers to GrabButton and GrabKey, results of QueryPointer,
@@ -235,22 +220,12 @@ are reserved in the protocol for errors and replies. */
 
 #define ShiftMask		(1<<0)
 #define LockMask		(1<<1)
-#ifndef _WIN32
-#   define ControlMask		(1<<2) /* See bug [9e31fd9449] and below */
-#else
-/* Pert-Tk expects ControlMask to be a macro. See ticket [593eb0227c] */
-#   define ControlMask		ControlMask /* uses the enum below */
-#endif
+#define ControlMask		(1<<2)
 #define Mod1Mask		(1<<3)
 #define Mod2Mask		(1<<4)
 #define Mod3Mask		(1<<5)
 #define Mod4Mask		(1<<6)
 #define Mod5Mask		(1<<7)
-
-/* See bug [9e31fd9449], this way prevents conflicts with Win32 headers */
-#ifdef _WIN32
-enum { None = 0, ControlMask = (1<<2) };
-#endif
 
 /* modifier names.  Used to build a SetModifierMapping request or
    to read a GetModifierMapping request.  These correspond to the
@@ -295,7 +270,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define NotifyWhileGrabbed	3
 
 #define NotifyHint		1	/* for MotionNotify events */
-
+		       
 /* Notify detail */
 
 #define NotifyAncestor		0
@@ -369,7 +344,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define RevertToParent		2
 
 /*****************************************************************
- * ERROR CODES
+ * ERROR CODES 
  *****************************************************************/
 
 #define Success		   0	/* everything's okay */
@@ -384,9 +359,9 @@ enum { None = 0, ControlMask = (1<<2) };
 #define BadDrawable	   9	/* parameter not a Pixmap or Window */
 #define BadAccess	  10	/* depending on context:
 				 - key/button already grabbed
-				 - attempt to free an illegal
-				   cmap entry
-				- attempt to store into a read-only
+				 - attempt to free an illegal 
+				   cmap entry 
+				- attempt to store into a read-only 
 				   color map entry.
  				- attempt to modify the access control
 				   list from other than the local host.
@@ -403,7 +378,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define LastExtensionError	255
 
 /*****************************************************************
- * WINDOW DEFINITIONS
+ * WINDOW DEFINITIONS 
  *****************************************************************/
 
 /* Window classes used by CreateWindow */
@@ -595,7 +570,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define GCCapStyle              (1L<<6)
 #define GCJoinStyle		(1L<<7)
 #define GCFillStyle		(1L<<8)
-#define GCFillRule		(1L<<9)
+#define GCFillRule		(1L<<9) 
 #define GCTile			(1L<<10)
 #define GCStipple		(1L<<11)
 #define GCTileStipXOrigin	(1L<<12)
@@ -612,7 +587,7 @@ enum { None = 0, ControlMask = (1<<2) };
 
 #define GCLastBit		22
 /*****************************************************************
- * FONTS
+ * FONTS 
  *****************************************************************/
 
 /* used in QueryFont -- draw direction */
@@ -623,7 +598,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define FontChange		255
 
 /*****************************************************************
- *  IMAGING
+ *  IMAGING 
  *****************************************************************/
 
 /* ImageFormat -- PutImage, GetImage */
@@ -633,7 +608,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define ZPixmap			2	/* depth == drawable depth */
 
 /*****************************************************************
- *  COLOR MAP STUFF
+ *  COLOR MAP STUFF 
  *****************************************************************/
 
 /* For CreateColormap */
@@ -658,7 +633,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define TileShape		1	/* size tiled fastest */
 #define StippleShape		2	/* size stippled fastest */
 
-/*****************************************************************
+/***************************************************************** 
  * KEYBOARD/POINTER STUFF
  *****************************************************************/
 
@@ -689,7 +664,7 @@ enum { None = 0, ControlMask = (1<<2) };
 #define MappingPointer		2
 
 /*****************************************************************
- * SCREEN SAVER STUFF
+ * SCREEN SAVER STUFF 
  *****************************************************************/
 
 #define DontPreferBlanking	0
@@ -719,10 +694,10 @@ enum { None = 0, ControlMask = (1<<2) };
 
 /* for ChangeAccessControl */
 
-#define EnableAccess		1
+#define EnableAccess		1      
 #define DisableAccess		0
 
-/* Display classes  used in opening the connection
+/* Display classes  used in opening the connection 
  * Note that the statically allocated ones are even numbered and the
  * dynamically changeable ones are odd numbered */
 
@@ -738,10 +713,5 @@ enum { None = 0, ControlMask = (1<<2) };
 
 #define LSBFirst		0
 #define MSBFirst		1
-
-#if defined(MAC_OSX_TK)
-#   undef Cursor
-#   undef Region
-#endif
 
 #endif /* X_H */

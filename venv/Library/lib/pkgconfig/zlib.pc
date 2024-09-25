@@ -1,12 +1,12 @@
-prefix=C:/Rakesh/MLPROJECT/venv/Library
-exec_prefix=C:/Rakesh/MLPROJECT/venv/Library
-libdir=C:/Rakesh/MLPROJECT/venv/Library/lib
-sharedlibdir=C:/Rakesh/MLPROJECT/venv/Library/lib
-includedir=C:/Rakesh/MLPROJECT/venv/Library/include
+prefix=c:/Rakesh/MLPROJECT/venv/Library
+exec_prefix=c:/Rakesh/MLPROJECT/venv/Library
+libdir=c:/Rakesh/MLPROJECT/venv/Library/lib
+sharedlibdir=c:/Rakesh/MLPROJECT/venv/Library/lib
+includedir=c:/Rakesh/MLPROJECT/venv/Library/include
 
 Name: zlib
 Description: zlib compression library
-Version: 1.2.13
+Version: 1.3.1
 
 Requires:
 Libs: -L${libdir} -L${sharedlibdir} -lz
