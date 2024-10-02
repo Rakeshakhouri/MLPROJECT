@@ -1,4 +1,10 @@
-numpy==2.1.0
-
--e .
+numpy
+pandas
+seaborn
+matplotlib
+scikit-learn
+dataprep
+catboost
+xgboost
+#-e .
 
